@@ -293,6 +293,195 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://vcoraoncsuft.top/2018/09/17/新的作品/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VCzon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/yyy.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="VCZON">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/17/新的作品/" itemprop="url">Nginx配置小记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-17T18:48:20+08:00">
+                2018-09-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/服务器配置/" itemprop="url" rel="index">
+                    <span itemprop="name">服务器配置</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  408
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>运营用的服务器有两个域名，其中一个域名A申请了SSL证书导致另一个B报不安全，但能访问。可是由于原来的开发逻辑包含微信授权，用的是域名B（划重点啊，不按设计模式的后果），导致一直无法进行授权，而微信的授权域名更改需要备案，A还正在备案中，又不想改一堆的域名，所以想到了nginx的反向代理软件</p>
+<p>nginx作为一个小巧的web服务器，更出名的则是他的反向代理功能，并且在写下这些文字的时候正在一步步蚕食IIS，Apache等反向代理的市场。由于运营服务器是windows系统（巨坑），所以下载windows版本的nginx后按网上博文的步骤就可以安装完毕。</p>
+<p>Nginx的代理设置在nginx.conf文件夹里的server标签里<br>例如：<br>server {<br>        listen       80;<br>        server_name  <a href="http://www.feidikj.xyz" target="_blank" rel="noopener">www.feidikj.xyz</a>;</p>
+<pre><code>    #charset koi8-r;
+    #access_log logs/host.access.log main;
+
+    location / {
+        proxy_pass http://127.0.0.1;
+        index index.html index.htm;
+    }
+}
+</code></pre><p>这样操作会报一个500的错误<br>worker_connections are not enough while connecting to upstream</p>
+<p>问题就在与nginx本身在监听80端口，而跳转的则又是80端口，有这样一个循环在，跳转的次数会不断增加，当超过固定的worker-connection时就会报错</p>
+<p>这是正确的配置方法<br>server {<br>        listen       80;<br>        server_name  <a href="http://www.feidikj.xyz" target="_blank" rel="noopener">www.feidikj.xyz</a>;</p>
+<pre><code>    #charset koi8-r;
+    #access_log logs/host.access.log main;
+
+    location / {
+        proxy_pass https://www.feidikj.com;
+        index index.html index.htm;
+    }
+}
+</code></pre><p>跳转的域名需要在计算机系统的host文件中指明是哪一个ip地址</p>
+<p>这样就可以正确工作了~</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+	<!-- 本文结束标记 -->
+	<div>
+		
+	</div>
+<!-- 本文结束标记END -->
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://vcoraoncsuft.top/2018/09/13/软件架构设计/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -998,7 +1187,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1009,7 +1198,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1020,7 +1209,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -1107,7 +1296,7 @@
     <!-- 博客字数统计 -->
     <span class="site-pv">
       <i class="fa fa-pencil"></i>
-      博客全站共： <span class="post-count">1.1k</span> 字
+      博客全站共： <span class="post-count">1.5k</span> 字
     </span>
 </div>
 <!-- 新增访客统计代码 END-->
